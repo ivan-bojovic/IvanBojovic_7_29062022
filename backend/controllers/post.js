@@ -9,6 +9,7 @@ exports.createPost = (req,res,next) => {
     const post = new Post({
         ...postObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        createdAt: new Date().toJSON(),
         likes: 0,
         dislikes: 0
     });
@@ -25,7 +26,7 @@ exports.modifyPost = (req,res,next) => {
     if(req.file){
         Post.findOne({ _id: req.params.id })
         .then(post => {
-            if (post.userId !== req.userId) {
+            if (post.userId !== req.userId || req.userRole !=="admin") {
                 return res.status(400).json ({
                     message: 'User ID Not Valid'
                 })

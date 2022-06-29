@@ -28,6 +28,8 @@ exports.signup = (req,res,next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
+                firstName:req.body.firstName,
+                lastName:req.body.lastName,
                 email: req.body.email,
                 password: hash
             });
@@ -54,7 +56,7 @@ exports.login = (req,res,next) => {
             res.status(200).json({
                 userId: user._id,
                 token: jwt.sign(
-                    { userId: user._id},
+                    { userId: user._id, role: user.role},
                     process.env.JWTTOKEN,
                     { expiresIn: '24h'}
                 )
