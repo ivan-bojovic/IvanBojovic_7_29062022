@@ -5,18 +5,24 @@ const { log } = require('console');
 // Création des posts.
 exports.createPost = (req,res,next) => {
     const postObject = JSON.parse(req.body.post)
-
+    if((postObject.imageUrl === "" || postObject.imageUrl === undefined) && (postObject.text === "" || postObject.text === undefined)) {
+        return res.status(400).json({message:'Votre post ne peut pas etre vide'});
+    }
     const post = new Post({
         ...postObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         createdAt: new Date().toJSON(),
         likes: 0,
         dislikes: 0
     });
+    if(req.file) {
+        post.imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    }
     post.save()
     .then(() => res.status(201).json({ message: 'Post enregistré.'}))
     .catch(error => res.status(400).json({ error }));
 };
+
+
 
 // Modifications des posts.
 exports.modifyPost = (req,res,next) => {
@@ -50,7 +56,7 @@ exports.modifyPost = (req,res,next) => {
 exports.deletePost = (req,res,next) => {
     Post.findOne({ _id: req.params.id })
     .then(post => {
-        if (post.userId !== req.userId) {
+        if (post.userId !== req.userId || req.userRole !=="admin" ) {
             return res.status(400).json ({
                 message: 'User ID Not Valid'
             })
@@ -74,9 +80,11 @@ exports.getOnePost = (req,res,next) => {
 
 // Renvoi tableau de posts.
 exports.getAllPost = (req,res,next) => {
-    Post.find()
-        .then(posts => res.status(200).json(posts))
-        .catch(error => res.status(400).json({ error }));
+    Post.find().sort([['createdAt', 'descending']])
+    .exec((err, posts) => {
+        console.log('exec done', err, posts);
+        res.status(200).json(posts)
+    })
 }
 
 // Gestion des likes.

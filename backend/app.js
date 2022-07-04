@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 // DOTENV pour gérer les variables d'environnements.
 require('dotenv').config();
 
+const path = require("path");
+
 // Importation router post.
 const postRoutes = require('./routes/post');
 
@@ -24,6 +26,7 @@ const app = express();
 
 app.use (express.json());
 
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
 
