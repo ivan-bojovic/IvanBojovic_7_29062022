@@ -4,10 +4,25 @@ const { log } = require('console');
 
 // Création des posts.
 exports.createPost = (req,res,next) => {
+    const isImage = req.file;
+    const messageObject = isImage ? {
+        ...JSON.parse(req.body.post),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        userId: req.userId
+    } : {
+        ...req.body, 
+        imageUrl: null,
+        userId: req.userId
+    }
+    console.log(messageObject);
     const postObject = JSON.parse(req.body.post)
-    if((postObject.imageUrl === "" || postObject.imageUrl === undefined) && (postObject.text === "" || postObject.text === undefined)) {
+    const imageVide = req.file === undefined ;
+    const textVide = postObject.text === undefined || postObject.text === "" ;
+    console.log(imageVide, textVide, postObject.imageUrl)
+    if(imageVide && textVide)  {
         return res.status(400).json({message:'Votre post ne peut pas etre vide'});
     }
+
     const post = new Post({
         ...postObject,
         createdAt: new Date().toJSON(),
@@ -18,10 +33,9 @@ exports.createPost = (req,res,next) => {
         post.imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
     }
     post.save()
-    .then(() => res.status(201).json({ message: 'Post enregistré.'}))
+    .then(() => res.status(201).json({ message: 'Post enregistré',post}))
     .catch(error => res.status(400).json({ error }));
 };
-
 
 
 // Modifications des posts.
@@ -56,20 +70,27 @@ exports.modifyPost = (req,res,next) => {
 exports.deletePost = (req,res,next) => {
     Post.findOne({ _id: req.params.id })
     .then(post => {
+        console.log(req.userId, post.userId, req.userId === post.userId)
         if (post.userId !== req.userId || req.userRole !=="admin" ) {
             return res.status(400).json ({
                 message: 'User ID Not Valid'
             })
         }
+        if(post.imageUrl){
         const filename = post.imageUrl.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
             Post.deleteOne({ _id: req.params.id })
             .then(() => res.status(200).json({ message: 'Post supprimé.'}))
             .catch(error => res.status(400).json({ error }));
         });
-    })
-    .catch(error => res.status(500).json({ error }));
-};
+      }
+      else {
+        Post.deleteOne({ _id: req.params.id })
+            .then(() => res.status(200).json({ message: 'Post supprimé.'}))
+            .catch(error => res.status(400).json({ error }));
+      }
+    });
+}
 
 // Renvoi la post avec l'ID.
 exports.getOnePost = (req,res,next) => {

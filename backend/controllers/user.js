@@ -19,17 +19,33 @@ passwordSchema
 .has().not().spaces()                          
 .is().not().oneOf(['Passw0rd', 'Password123']);
 
+function nameCheck (name) {
+      const regexName =
+        /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+      if (
+         typeof name == "string" &&
+          name !== '' &&
+          name.length >2 &&
+          regexName.test(name) 
+      )
+      return true;
+      else return false;
+};
 // Inscription de l'utilisateur et cryptage du password.
 exports.signup = (req,res,next) => {
-    console.log( req.body.email.indexOf('@groupomania.fr') === -1)
     if(
         !emailValidator.validate(req.body.email) ||
-        !passwordSchema.validate(req.body.password) ||
         req.body.email.indexOf('@groupomania.fr') === -1
       )  {
-        return res.status(400).json({message:'Verifiez le format de votre addresse e-mail ou votre mot de passe'});
-    }else if (emailValidator.validate(req.body.email) || passwordSchema.validate(req.body.password)) {
-    
+        return res.status(400).json({message:'Verifiez le format de votre addresse e-mail'});
+    } else if (!passwordSchema.validate(req.body.password)) {
+        return res.status(400).json({message:'Votre mot de passe doit contenir...'});
+    } else if ( !nameCheck(req.body.firstName)) {
+     return res.status(400).json({message:'Merci d\'écrire votre prénom correctement'});
+    }else if ( !nameCheck(req.body.lastName)) {
+        return res.status(400).json({message:'Merci d\'écrire votre nom correctement'}); }
+        else {
+   
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
@@ -51,12 +67,12 @@ exports.login = (req,res,next) => {
     User.findOne({ email: req.body.email })
     .then(user => {
         if(!user){
-            return res.status(401).json({ error: 'Utilisateur non trouvé.'})
+            return res.status(401).json({ error: "Impossible de se connecter!Verifier votre email ou mot de passe!"})
         }
         bcrypt.compare(req.body.password, user.password)
         .then(valid => {
             if(!valid){
-                return res.status(401).json({ error: 'Mot de passe incorrect.'})
+                return res.status(401).json({ error: "Impossible de se connecter!Verifier votre email ou mot de passe!"})
             }
             res.status(200).json({
                 userId: user._id,
