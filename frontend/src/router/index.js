@@ -8,10 +8,15 @@ const routes = [
 }, 
      
     {
-      path: '/signup',
+    path: '/Signup',
      name: 'Signup',
      component: () => import("../views/SignupForm.vue")
    },
+   {
+    path: '/Feed',
+    name: 'Feed',
+   component: () => import("../views/Feed.vue")
+  },  
 ]
 
 const router = createRouter({

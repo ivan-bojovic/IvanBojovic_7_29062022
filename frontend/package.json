@@ -19,7 +19,6 @@
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
     "vue": "^3.2.13",
-    "vue-axios": "^3.4.1",
     "vue-router": "^4.1.1",
     "vuex": "^4.0.2"
   },
@@ -29,7 +28,6 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3"
   },
   "eslintConfig": {
@@ -45,11 +43,6 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {},
-    "browserslist": [
-      "> 1%",
-      "last 2 versions",
-      "not dead",
-      "not ie 11"
-    ]
+    "browserslist": []
   }
 }
