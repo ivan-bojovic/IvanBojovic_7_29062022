@@ -6,21 +6,18 @@
         <img src="../assets/icon-left-font-monochrome-black.png" alt="logo" />
       </div>
     </section>
- </div>
+  </div>
 </template>
 
-<script >
+<script>
 export default {
   name: "HeaderLogo",
 };
 </script>
 
-
-
 <style scoped>
-.col img{
+.col img {
   width: 200px;
   height: 200px;
-
 }
 </style>

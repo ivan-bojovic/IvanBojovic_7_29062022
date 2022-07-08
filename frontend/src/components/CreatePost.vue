@@ -1,9 +1,8 @@
 <template>
-
   <!---- Creation of posts-->
   <div class="createPost jumbotron pb-0">
     <form>
-      <div class="form-group ">
+      <div class="form-group">
         <label for="content" aria-label="Texte du post"></label>
         <textarea
           id="content"
@@ -13,29 +12,31 @@
           placeholder="Quoi de neuf ?"
         />
       </div>
-      <div class="input-group mb-3 ">
+      <div class="input-group mb-3">
         <label for="image" aria-label="Ajouter une image"></label>
 
-  <input 
-  name="image"
-  type="file" 
-  class="form-control" 
-  id="image"
-  accept="image/png, image/jpeg, image/jpg, image/gif"
-          @change="onFileSelected"/>
-  <label class="input-group-text form-rounded" for="image"
-  type="button"
-  aria-label="Publier post"
+        <input
+          name="image"
+          type="file"
+          class="form-control"
+          id="image"
+          accept="image/png, image/jpeg, image/jpg, image/gif"
+          @change="onFileSelected"
+        />
+        <label
+          class="input-group-text form-rounded"
+          for="image"
+          type="button"
+          aria-label="Publier post"
           title="Publier post"
           @click.prevent="createPost"
-        >Publier</label>
-</div>
-      
-        
+          >Publier</label
+        >
+      </div>
+
       <span id="msgError" class="mx-3 text-danger">{{ msgError }}</span>
     </form>
   </div>
-
 </template>
 
 <script>
@@ -49,8 +50,8 @@ export default {
       user: {
         lastName: "",
         firstName: "",
-        avatar: ""
-        },
+        avatar: "",
+      },
 
       post: {
         content: "",
@@ -111,12 +112,16 @@ export default {
         this.msgError = "Rien à publier";
       } else {
         axios
-          .post("http://localhost:3000/api/posts/", fd, 
-            { headers: { 'Content-Type': 'multipart/form-data', 'Authorization':'Bearer ' + localStorage.getItem('token')}} )
+          .post("http://localhost:3000/api/posts/", fd, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
           .then(() => {
             this.post.content = "";
             this.post.image = "";
-            this.$emit("postCreated")
+            this.$emit("postCreated");
           })
           .catch((error) => console.log(error));
       }
@@ -125,19 +130,11 @@ export default {
 };
 </script>
 
-
 <style scoped>
-
-
-
-
-
-
 @media screen and (max-width: 768px) {
   .form-control {
-    width:100%;
-    margin:auto;
-
+    width: 100%;
+    margin: auto;
   }
 }
 </style>

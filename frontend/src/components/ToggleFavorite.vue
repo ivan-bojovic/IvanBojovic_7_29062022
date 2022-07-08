@@ -16,21 +16,21 @@ import FavoriteIcon from "../components/FavoriteIcon.vue";
 export default {
   name: "ToggleFavorite",
   components: {
-    FavoriteIcon
+    FavoriteIcon,
   },
   data() {
     return {
       favorited: false,
-      animating: false
+      animating: false,
     };
   },
   computed: {
     iconClasses() {
       return {
         "toggle-favorite__icon--favorited": this.favorited,
-        "toggle-favorite__icon--animate": this.animating
+        "toggle-favorite__icon--animate": this.animating,
       };
-    }
+    },
   },
   methods: {
     toggle() {
@@ -43,13 +43,12 @@ export default {
     },
     onIconAnimationEnds() {
       this.animating = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
+<style scoped lang="scss">
 $particles-animation-duration: 0.8s;
 $icon-animation-duration: 0.48s;
 $icon-color: hsl(1, 89%, 61%);
@@ -86,18 +85,6 @@ $icon-border-color: hsl(0, 0%, 10%);
   }
 }
 
-// Particles animation.
-.favorite-particles-transition-enter-active {
-  background-image: url("/particles-sprite.png");
-  background-size: 2500% auto;
-  background-position: left center;
-  background-repeat: no-repeat;
-
-  animation-duration: $particles-animation-duration;
-  animation-timing-function: steps(24);
-  animation-name: favorite-particles-animation;
-}
-
 .toggle-favorite {
   font-size: 20px;
   position: relative;
@@ -117,7 +104,7 @@ $icon-border-color: hsl(0, 0%, 10%);
       stroke: $icon-color;
     }
 
-    // Icon animation
+    // animation d'icon
     &--animate {
       opacity: 0;
       transform: scale(0);
