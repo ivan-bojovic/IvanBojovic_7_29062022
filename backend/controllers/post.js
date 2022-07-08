@@ -4,17 +4,7 @@ const { log } = require('console');
 
 // Création des posts.
 exports.createPost = (req,res,next) => {
-    const isImage = req.file;
-    const messageObject = isImage ? {
-        ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        userId: req.userId
-    } : {
-        ...req.body, 
-        imageUrl: null,
-        userId: req.userId
-    }
-    console.log(messageObject);
+
     const postObject = JSON.parse(req.body.post)
     const imageVide = req.file === undefined ;
     const textVide = postObject.text === undefined || postObject.text === "" ;
@@ -71,7 +61,7 @@ exports.deletePost = (req,res,next) => {
     Post.findOne({ _id: req.params.id })
     .then(post => {
         console.log(req.userId, post.userId, req.userId === post.userId)
-        if (post.userId !== req.userId || req.userRole !=="admin" ) {
+        if (post.userId !== req.userId && req.userRole !=="admin" ) {
             return res.status(400).json ({
                 message: 'User ID Not Valid'
             })
@@ -118,12 +108,17 @@ exports.userLikePost = (req, res, next) => {
                     post.usersDisliked.push(req.body.userId)
                     post.save()
                 }
+                else {
+                    return res.status(400).json({ error: 'Vous pouvez dislike le post qu\'une fois' })
+                }
             }
             else if (req.body.like === 1) {
                 if (!post.usersLiked.includes(req.body.userId)) {
                     post.likes++
                     post.usersLiked.push(req.body.userId)
                     post.save()
+                }else {
+                    return res.status(400).json({ error: 'Vous pouvez aimer le post qu\'une fois' })
                 }
             }
             else if (req.body.like === 0) {
@@ -138,10 +133,14 @@ exports.userLikePost = (req, res, next) => {
                 post.save()
             }
             else {
-                res.status(400).json({ error: 'Erreur!' })
+                res.status(400).json({ error: 'veuillez liker ou disliker le post' })
                 return
             }
             res.status(200).json(post)
         })
-        .catch((error) => res.status(404).json({ error: error }))
+        .catch((error) => 
+        {  console.log("error", error)
+            res.status(404).json({ error: error.message })
+        })
+
 }
