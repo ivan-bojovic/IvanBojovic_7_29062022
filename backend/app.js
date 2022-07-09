@@ -6,9 +6,11 @@ const mongoose = require("mongoose");
 
 // DOTENV pour gérer les variables d'environnements.
 require("dotenv").config();
-
+// Importation helmet.
+const helmet = require("helmet"); // Sécurisation des en-tete.
+// CORS.
 const cors = require("cors");
-
+// Accès au chemin du système de fichier.
 const path = require("path");
 
 // Importation router post.
@@ -27,6 +29,10 @@ mongoose
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 const app = express();
+
+//Securité OWASP.
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.use(express.json());
 app.use(cors());
