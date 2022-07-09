@@ -1,22 +1,17 @@
 <template>
   <div class="container mt-5 mb-5">
-    {{ userData }}
+    {{ allPosts }}
     <div class="row d-flex align-items-center justify-content-center">
       <!-- LE FIL D'ACTUALITÉS DES POSTS -->
       <div class="col-md-6">
         <div
           v-for="(post, index) in allPosts"
-          v-bind:key="post.id"
+          v-bind:key="post._id"
           class="card"
         >
           <div class="d-flex justify-content-between p-2 px-3">
             <div class="d-flex flex-row align-items-center">
               <div class="d-flex flex-column ml-2">
-                <span
-                  class="font-weight-bold"
-                  aria-label="nom prénom de l'utilisateur"
-                  >{{ post.User.lastName }} {{ post.User.firstName }}</span
-                >
                 <small class="text-primary">{{
                   post.createdAt.split("T")[0].split("-").reverse().join("/") +
                   " à " +
@@ -32,7 +27,7 @@
                     role="button"
                     aria-label="Supprimer post"
                     class="btn"
-                    @click="deletePost(post.id)"
+                    @click="deletePost(post._id)"
                   >
                     <font-awesome-icon
                       class="fa"
@@ -41,7 +36,7 @@
                     />
                   </button>
 
-                  <!-- Bouton éditer posts -->
+                  Bouton éditer posts
                   <button
                     type="submit"
                     role="button"
@@ -58,16 +53,17 @@
           </div>
           <img
             v-if="post.image != null"
-            :src="`http://localhost:3000/images/posts/${post.image}`"
+            :src="`${post.image}`"
             alt=""
             class="img-fluid"
           />
           <div class="p-2">
-            <p class="text-justify" v-if="post.content">{{ post.content }}</p>
+            <p class="text-justify" v-if="post.text">{{ post.text }}</p>
             <div class="heartLike">
               <ToggleFavorite />
             </div>
           </div>
+          -->
         </div>
       </div>
     </div>
@@ -103,7 +99,7 @@
               <!-- Champs modification post -->
               <textarea
                 class="form-control"
-                v-model="postModified.content"
+                v-model="postModified.text"
                 placeholder="Modifier mon post…"
                 aria-label="Champs modifier le post"
               >
@@ -141,8 +137,8 @@
 
           <!-- Boutons envoi post -->
           <button
-            v-if="postModified.content !== '' || postModified.image !== ''"
-            @click.prevent="editPost(post.id), reload()"
+            v-if="postModified.text !== '' || postModified.image !== ''"
+            @click.prevent="editPost(post._id), reload()"
             type="button"
             role="button"
             class="btn btn-dark align-items-center rounded-pill"
@@ -208,13 +204,13 @@ export default {
     editPost(postId) {
       console.log(postId);
       let formData = new FormData();
-      if (this.postModified.content) {
-        formData.append("content", this.postModified.content);
+      if (this.postModified.text) {
+        formData.append("text", this.postModified.text);
       }
       if (this.postModified.image) {
         formData.append("image", this.postModified.image);
       }
-      console.log("test", formData.get("content"));
+      console.log("test", formData.get("text"));
       console.log("test", formData.get("image"));
       axios
         .put("http://localhost:3000/api/posts/" + postId, formData, {

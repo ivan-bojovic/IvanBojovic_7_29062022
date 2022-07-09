@@ -7,7 +7,7 @@
         <textarea
           id="content"
           rows="5"
-          v-model="post.content"
+          v-model="post.text"
           class="form-control form-control-sm form-rounded border border-secondary"
           placeholder="Quoi de neuf ?"
         />
@@ -50,11 +50,10 @@ export default {
       user: {
         lastName: "",
         firstName: "",
-        avatar: "",
       },
 
       post: {
-        content: "",
+        text: "",
         image: "",
       },
       msgError: "",
@@ -94,18 +93,17 @@ export default {
     onFileSelected(event) {
       console.log(event);
       this.post.image = event.target.files[0] || event.dataTransfer.files;
-      console.log(this.post.image);
     },
     createPost() {
       console.log(this.post);
       const fd = new FormData();
-      fd.append("content", this.post.content);
+      fd.append("text", this.post.text);
       fd.append("image", this.post.image);
-      console.log("test", fd.get("content"));
+      console.log("test", fd.get("text"));
       console.log("test", fd.get("image"));
       if (
-        (fd.get("content") == null && fd.get("image") == null) ||
-        (fd.get("content") == "" && fd.get("image") == "")
+        (fd.get("text") == null && fd.get("image") == null) ||
+        (fd.get("text") == "" && fd.get("image") == "")
       ) {
         let msgReturn = document.getElementById("msgError");
         msgReturn.classList.add("text-danger");
@@ -119,7 +117,7 @@ export default {
             },
           })
           .then(() => {
-            this.post.content = "";
+            this.post.text = "";
             this.post.image = "";
             this.$emit("postCreated");
           })

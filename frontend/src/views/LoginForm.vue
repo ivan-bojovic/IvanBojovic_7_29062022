@@ -27,7 +27,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   border-bottom: 3px solid var(--color-primary);
