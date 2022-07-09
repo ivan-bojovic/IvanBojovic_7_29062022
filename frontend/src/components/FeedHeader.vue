@@ -8,16 +8,6 @@
       <span><strong>Bonjour</strong> {{ userData.data.firstName }} </span>
       <ul class="nav">
         <li class="nav-item mt-3 px-4">
-          <router-link to="/feed">
-            <font-awesome-icon
-              icon="house"
-              aria-label="Fil d'actualité"
-              title="Fil d'actualité"
-            />
-          </router-link>
-        </li>
-
-        <li class="nav-item mt-3 px-4">
           <router-link to="/" @click="logout">
             <font-awesome-icon
               icon="right-from-bracket"
@@ -66,8 +56,8 @@ a {
 }
 
 .col img {
-  width: 30px;
-  height: 30px;
+  width: 100px;
+  height: 100px;
 }
 
 .navbar {

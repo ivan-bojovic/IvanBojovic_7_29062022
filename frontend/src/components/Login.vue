@@ -81,6 +81,6 @@ export default {
 
 <style scoped>
 .btn-secondary {
-  background-color: var(--color-tertiary);
+  background-color: var(--color-primary);
 }
 </style>

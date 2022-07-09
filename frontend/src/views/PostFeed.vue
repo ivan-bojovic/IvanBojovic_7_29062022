@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import FeedHeader from "../components/FeedHeader.vue";
-import CreatePost from "../components/CreatePost.vue";
-import PostsList from "../components/PostsList.vue";
+import FeedHeader from "@/components/FeedHeader.vue";
+import CreatePost from "@/components/CreatePost.vue";
+import PostsList from "@/components/PostsList.vue";
 
 export default {
   name: "PostFeed",

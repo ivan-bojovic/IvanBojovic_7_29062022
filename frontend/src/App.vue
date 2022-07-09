@@ -4,14 +4,21 @@
   </div>
 </template>
 
+<script>
+export default {
+  mounted() {
+    this.$store.commit("checkUserData");
+  },
+};
+</script>
+
 <style lang="scss">
 .container {
-font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 body {
-  --color-primary : #FD2D01;
-  --color-secondary: #FFD7D7;
-  --color-tertiary: #4E5166;
+  --color-primary: #fd2d01;
+  --color-secondary: #ffd7d7;
+  --color-tertiary: #4e5166;
 }
 </style>
-
