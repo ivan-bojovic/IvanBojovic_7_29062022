@@ -21,7 +21,12 @@
             </div>
             <div class="d-flex flex-row mt-1 ellipsis">
               <small class="mr-2">
-                <div>
+                <div
+                  v-if="
+                    userData.data.userId == post.userId ||
+                    userData.data.role == 'admin'
+                  "
+                >
                   <button
                     type="submit"
                     role="button"
@@ -60,92 +65,93 @@
           <div class="p-2">
             <p class="text-justify" v-if="post.text">{{ post.text }}</p>
             <div class="thumbs">
-              <font-awesome-icon icon="thumbs-up" size="2x" />
-              <font-awesome-icon icon="thumbs-down" size="2x" />
+              <font-awesome-icon icon="thumbs-up" />
+              <span> {{ post.likes }}</span>
+              <font-awesome-icon icon="thumbs-down" />
+              <span>{{ post.dislikes }}</span>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FENÊTRE MODIFICATION POSTS -->
-  <div
-    class="modal fade"
-    :id="'exampleModal' + index"
-    tabindex="-1"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title h4">Modifiez votre post</h4>
-
-          <button
-            type="button"
-            role="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-
-        <div class="modal-body">
-          <form
-            enctype="multipart/form-data"
-            aria-label="Formulaire envoi nouveau post"
+          <!-- FENÊTRE MODIFICATION POSTS -->
+          <div
+            class="modal fade"
+            :id="'exampleModal' + index"
+            tabindex="-1"
+            aria-hidden="true"
           >
-            <div class="mb-3">
-              <!-- Champs modification post -->
-              <textarea
-                class="form-control"
-                v-model="postModified.text"
-                placeholder="Modifier mon post…"
-                aria-label="Champs modifier le post"
-              >
-              </textarea>
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title h4">Modifiez votre post</h4>
+
+                  <button
+                    type="button"
+                    role="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+
+                <div class="modal-body">
+                  <form
+                    enctype="multipart/form-data"
+                    aria-label="Formulaire envoi nouveau post"
+                  >
+                    <div class="mb-3">
+                      <!-- Champs modification post -->
+                      <textarea
+                        class="form-control"
+                        v-model="postModified.text"
+                        placeholder="Modifier mon post…"
+                        aria-label="Champs modifier le post"
+                      >
+                      </textarea>
+                    </div>
+
+                    <!-- et/ou champs choisir image -->
+                    <div class="mb-3">
+                      <label
+                        class="input-group-text my-3 btn-outline-dark labelimagepost--custom"
+                      >
+                        Choisir image
+                        <input
+                          aria-label="Choisir image post"
+                          class="form-control form-control-sm ms-3"
+                          type="file"
+                          name="image"
+                          accept=".jpg, .jpeg, .gif, .png"
+                          @change="onFileSelected"
+                        />
+                      </label>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary rounded-pill"
+                    data-bs-dismiss="modal"
+                    aria-label="Annuler changement"
+                  >
+                    Annuler
+                  </button>
+
+                  <!-- Boutons envoi post -->
+                  <button
+                    v-if="postModified.text !== '' || postModified.image !== ''"
+                    @click.prevent="editPost(post._id), reload()"
+                    type="button"
+                    role="button"
+                    class="btn btn-dark align-items-center rounded-pill"
+                    aria-label="Enregister modification du post"
+                  >
+                    Enregistrer
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <!-- et/ou champs choisir image -->
-            <div class="mb-3">
-              <label
-                class="input-group-text my-3 btn-outline-dark labelimagepost--custom"
-              >
-                Choisir image
-                <input
-                  aria-label="Choisir image post"
-                  class="form-control form-control-sm ms-3"
-                  type="file"
-                  name="image"
-                  accept=".jpg, .jpeg, .gif, .png"
-                  @change="onFileSelected"
-                />
-              </label>
-            </div>
-          </form>
-        </div>
-
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary rounded-pill"
-            data-bs-dismiss="modal"
-            aria-label="Annuler changement"
-          >
-            Annuler
-          </button>
-
-          <!-- Boutons envoi post -->
-          <button
-            v-if="postModified.text !== '' || postModified.image !== ''"
-            @click.prevent="editPost(post._id), reload()"
-            type="button"
-            role="button"
-            class="btn btn-dark align-items-center rounded-pill"
-            aria-label="Enregister modification du post"
-          >
-            Enregistrer
-          </button>
+          </div>
         </div>
       </div>
     </div>
@@ -161,12 +167,6 @@ export default {
   components: {},
   data() {
     return {
-      user: {
-        lastName: "",
-        firstName: "",
-        avatar: "",
-        userId: "",
-      },
       allPosts: [],
       postModified: {},
       msgError: "",
@@ -197,7 +197,9 @@ export default {
           console.log(error + "Echec lors de la récupération des publications.")
         );
     },
-
+    reload() {
+      setTimeout("window.open(self.location, '_self');", 1000);
+    },
     editPost(postId) {
       console.log(postId);
       let formData = new FormData();

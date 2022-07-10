@@ -30,7 +30,7 @@ export default {
 <style>
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  border-bottom: 3px solid var(--color-tertiary);
+  border-bottom: 3px solid var(--color-primary);
   border-top: none;
   border-right: none;
   border-left: none;

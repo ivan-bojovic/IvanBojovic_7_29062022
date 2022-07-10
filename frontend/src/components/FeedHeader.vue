@@ -1,9 +1,15 @@
 <template>
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-      <div class="col">
-        <!-- Logo Groupomania -->
-        <img src="../assets/icon-left-font-monochrome-black.png" alt="logo" />
+      <div class="navbar-brand">
+        <img
+          src="../assets/icon-left-font.png"
+          alt="logo"
+          width="30"
+          height="30"
+          class="d-inline-block align-text-top"
+        />
+        <span class="text"> Groupomania </span>
       </div>
       <span><strong>Bonjour</strong> {{ userData.data.firstName }} </span>
       <ul class="nav">
@@ -27,13 +33,7 @@ import { mapState } from "vuex";
 export default {
   name: "FeedHeader",
   data() {
-    return {
-      user: {
-        lastName: "",
-        firstName: "",
-        avatar: "",
-      },
-    };
+    return {};
   },
   computed: {
     ...mapState({
@@ -52,28 +52,13 @@ export default {
 
 <style scoped>
 a {
-  color: black;
+  color: var(--color-tertiary);
 }
-
-.col img {
-  width: 100px;
-  height: 100px;
+.text {
+  color: var(--color-primary);
 }
-
 .navbar {
   display: flex;
   justify-content: flex-end;
-}
-
-.post-user-avatar {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-
-@media screen and (max-width: 768px) {
-  .post-user-avatar {
-    margin-left: 5px;
-  }
 }
 </style>
