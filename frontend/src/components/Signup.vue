@@ -193,6 +193,9 @@ export default {
   color: red;
   text-align: center;
 }
+.btn-secondary {
+  background-color: var(--color-tertiary);
+}
 .help {
   font-size: 10px;
   margin: 0px;

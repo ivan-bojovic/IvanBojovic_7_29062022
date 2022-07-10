@@ -36,7 +36,7 @@
                     />
                   </button>
 
-                  Bouton éditer posts
+                  <!--Bouton éditer posts-->
                   <button
                     type="submit"
                     role="button"
@@ -59,11 +59,11 @@
           />
           <div class="p-2">
             <p class="text-justify" v-if="post.text">{{ post.text }}</p>
-            <div class="heartLike">
-              <ToggleFavorite />
+            <div class="thumbs">
+              <font-awesome-icon icon="thumbs-up" size="2x" />
+              <font-awesome-icon icon="thumbs-down" size="2x" />
             </div>
           </div>
-          -->
         </div>
       </div>
     </div>
@@ -155,13 +155,10 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
-import ToggleFavorite from "../components/ToggleFavorite.vue";
 
 export default {
   name: "PostsList",
-  components: {
-    ToggleFavorite,
-  },
+  components: {},
   data() {
     return {
       user: {
@@ -255,5 +252,11 @@ export default {
 <style scoped>
 .card {
   margin-bottom: 30px;
+}
+.thumbs {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  justify-items: center;
 }
 </style>

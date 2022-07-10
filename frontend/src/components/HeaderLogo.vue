@@ -3,7 +3,7 @@
     <section class="row">
       <div class="col">
         <!-- Logo Groupomania -->
-        <img src="../assets/icon-left-font.png" alt="logo" />
+        <img src="../assets/icon-left-font-monochrome-black.png" alt="logo" />
       </div>
     </section>
   </div>
@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
 .col img {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
 }
 </style>
