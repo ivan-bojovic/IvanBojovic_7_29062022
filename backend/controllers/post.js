@@ -142,7 +142,8 @@ exports.userLikePost = (req, res, next) => {
             1
           );
           post.dislikes--;
-        } else if (post.usersLiked.includes(req.body.userId)) {
+        }
+        if (post.usersLiked.includes(req.body.userId)) {
           post.usersLiked.splice(post.usersLiked.indexOf(req.body.userId), 1);
           post.likes--;
         }
