@@ -5,11 +5,10 @@
         <img
           src="../assets/icon-left-font.png"
           alt="logo"
-          width="30"
-          height="30"
+          width="50"
+          height="50"
           class="d-inline-block align-text-top"
         />
-        <span class="text"> Groupomania </span>
       </div>
       <span
         ><strong>Bonjour</strong> {{ userData.data.firstName }}
@@ -56,9 +55,6 @@ export default {
 <style scoped>
 a {
   color: var(--color-tertiary);
-}
-.text {
-  color: var(--color-primary);
 }
 .navbar {
   display: flex;
