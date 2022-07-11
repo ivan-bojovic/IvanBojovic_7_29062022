@@ -41,17 +41,12 @@
 
 <script>
 import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   name: "CreatePost",
   data() {
     return {
-      userData: { data: {} },
-      user: {
-        lastName: "",
-        firstName: "",
-      },
-
       post: {
         text: "",
         image: "",
@@ -60,36 +55,13 @@ export default {
       msgWelcome: "",
     };
   },
-
-  mounted() {
-    this.createUserData(), this.getAllPosts();
+  computed: {
+    ...mapState({
+      userData: (state) => state.userData,
+    }),
   },
+
   methods: {
-    getAllPosts() {
-      axios
-        .get("http://localhost:3000/api/posts/")
-        .then((response) => {
-          if (response.data.length > 0) {
-            this.allPosts = response.data;
-            console.log(this.allPosts);
-          } else {
-            console.log("Il n'y a pas encore de publication.");
-          }
-        })
-        .catch((error) =>
-          console.log(error + "Echec lors de la récupération des publications.")
-        );
-    },
-    createUserData() {
-      if (localStorage.getItem("user")) {
-        try {
-          this.userData = JSON.parse(localStorage.getItem("user"));
-        } catch (e) {
-          localStorage.removeItem("user");
-          console.log("Données corrompues");
-        }
-      }
-    },
     onFileSelected(event) {
       console.log(event);
       this.post.image = event.target.files[0] || event.dataTransfer.files;

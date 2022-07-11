@@ -146,19 +146,19 @@ export default {
     checkLastName() {
       console.log("check", this.dataSignup.lastName);
       if (checkField("Alpha", this.dataSignup.lastName) == false)
-        this.lastNameError = "le nom pas bien écrit";
+        this.lastNameError = "le nom ne pas bien écrit";
       else this.lastNameError = "";
     },
     checkFirstName() {
       console.log("check", this.dataSignup.firstName);
       if (checkField("Alpha", this.dataSignup.firstName) == false)
-        this.firstNameError = "le prénom pas bien écrit";
+        this.firstNameError = "le prénom ne pas bien écrit";
       else this.firstNameError = "";
     },
     checkEmail() {
       console.log("check", this.dataSignup.email);
       if (checkField("Email", this.dataSignup.email) == false)
-        this.emailError = "email pas bien écrit";
+        this.emailError = "email groupomania.fr";
       else this.emailError = "";
     },
     checkPassword() {

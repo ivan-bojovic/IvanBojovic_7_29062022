@@ -1,6 +1,5 @@
 <template>
   <div class="container mt-5 mb-5">
-    {{ allPosts }}
     <div class="row d-flex align-items-center justify-content-center">
       <!-- LE FIL D'ACTUALITÉS DES POSTS -->
       <div class="col-md-6">
@@ -28,7 +27,7 @@
                   "
                 >
                   <button
-                    type="submit"
+                    type="button"
                     role="button"
                     aria-label="Supprimer post"
                     class="btn"
@@ -64,13 +63,8 @@
           />
           <div class="p-2">
             <p class="text-justify" v-if="post.text">{{ post.text }}</p>
-            <div class="thumbs">
-              <font-awesome-icon icon="thumbs-up" />
-              <span> {{ post.likes }}</span>
-              <font-awesome-icon icon="thumbs-down" />
-              <span>{{ post.dislikes }}</span>
-            </div>
           </div>
+          <LikeDislike :post="post" />
           <!-- FENÊTRE MODIFICATION POSTS -->
           <div
             class="modal fade"
@@ -161,10 +155,13 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+import LikeDislike from "./LikeDislike.vue";
 
 export default {
   name: "PostsList",
-  components: {},
+  components: {
+    LikeDislike,
+  },
   data() {
     return {
       allPosts: [],
@@ -180,11 +177,14 @@ export default {
   mounted() {
     this.getAllPosts();
   },
-
   methods: {
     getAllPosts() {
       axios
-        .get("http://localhost:3000/api/posts/")
+        .get("http://localhost:3000/api/posts/", {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
         .then((response) => {
           if (response.data.length > 0) {
             this.allPosts = response.data;
@@ -223,7 +223,6 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-
     deletePost(postId) {
       if (
         window.confirm("Etes-vous sûr de vouloir supprimer votre publication ?")
@@ -247,7 +246,9 @@ export default {
         event.target.files[0] || event.dataTransfer.files;
       console.log(this.postModified.image);
     },
+    // envoi du like au back-end et maj infos
   },
+  components: { LikeDislike },
 };
 </script>
 
