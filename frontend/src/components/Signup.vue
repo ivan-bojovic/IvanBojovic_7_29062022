@@ -80,18 +80,17 @@
           class="form-control"
           required
           minlength="8"
+          @blur="checkPasswordConfirmation"
         />
-        <span
-          class="errorMsg"
-          v-if="dataSignup.password !== dataSignup.passwordConfirmation"
-        >
-          Veuillez confirmer votre mot de passe
+        <span class="errorMsg" v-if="passwordConfirmationError"
+          >{{ passwordConfirmationError }}
         </span>
       </div>
       <p id="signupError"></p>
 
       <!-- Submit button -->
       <button
+        :disabled="!formValid"
         @click="signup()"
         type="button"
         class="btn btn-secondary btn-block mb-3"
@@ -121,6 +120,7 @@ export default {
       firstNameError: "",
       emailError: "",
       passwordError: "",
+      passwordConfirmationError: "",
     };
   },
   computed: {
@@ -129,14 +129,16 @@ export default {
         this.dataSignup.lastName == "" ||
         this.dataSignup.firstName == "" ||
         this.dataSignup.email == "" ||
-        this.dataSignup.password == ""
+        this.dataSignup.password == "" ||
+        this.dataSignup.passwordConfirmation == ""
       )
         return false;
       if (
         this.lastNameError == "" &&
         this.firstNameError == "" &&
-        this.dataSignup.email == "" &&
-        this.dataSignup.password == ""
+        this.emailError == "" &&
+        this.passwordError == "" &&
+        this.passwordConfirmationError == ""
       )
         return true;
       else return false;
@@ -166,6 +168,13 @@ export default {
       if (checkField("Password", this.dataSignup.password) == false)
         this.passwordError = "password invalid";
       else this.passwordError = "";
+    },
+    checkPasswordConfirmation() {
+      console.log("check", this.dataSignup.passwordConfirmation);
+      if (this.dataSignup.password !== this.dataSignup.passwordConfirmation)
+        this.passwordConfirmationError =
+          "Veuillez confirmer votre mot de passe";
+      else this.passwordConfirmationError = "";
     },
     signup() {
       axios

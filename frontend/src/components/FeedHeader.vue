@@ -11,7 +11,10 @@
         />
         <span class="text"> Groupomania </span>
       </div>
-      <span><strong>Bonjour</strong> {{ userData.data.firstName }} </span>
+      <span
+        ><strong>Bonjour</strong> {{ userData.data.firstName }}
+        {{ userData.data.lastName }}
+      </span>
       <ul class="nav">
         <li class="nav-item mt-3 px-4">
           <router-link to="/" @click="logout">

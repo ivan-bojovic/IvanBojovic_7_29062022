@@ -1,5 +1,5 @@
 const regexs = {
-  Email: /^[A-Za-z0-9\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9-]{2,4}$/,
+  Email: /^[A-Za-z0-9\-\.]+@groupomania\.fr$/g,
   Password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/g,
   Alpha: /^[a-zA-Zçñàéèêëïîôüù][a-zA-Zçñàéèêëïîôüù\- '\\.]{1,25}$/g,
 };
