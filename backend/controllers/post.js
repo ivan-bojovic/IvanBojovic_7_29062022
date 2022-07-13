@@ -7,8 +7,8 @@ exports.createPost = (req, res, next) => {
   console.log(req.body);
   const postObject = { text: req.body.text };
   const imageVide = req.file === undefined;
-  const textVide = postObject.text === undefined || postObject.text === "";
-  console.log(imageVide, textVide, postObject.image, req.file);
+  const textVide = postObject === undefined || postObject === "";
+  console.log(imageVide, textVide, postObject);
   if (imageVide && textVide) {
     return res
       .status(400)
@@ -116,6 +116,10 @@ exports.userLikePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       if (req.body.like === -1) {
+        if (post.usersLiked.includes(req.body.userId)) {
+          post.usersLiked.splice(post.usersLiked.indexOf(req.body.userId), 1);
+          post.likes--;
+        }
         if (!post.usersDisliked.includes(req.body.userId)) {
           post.dislikes++;
           post.usersDisliked.push(req.body.userId);
@@ -126,6 +130,13 @@ exports.userLikePost = (req, res, next) => {
             .json({ error: "Vous pouvez dislike le post qu'une fois" });
         }
       } else if (req.body.like === 1) {
+        if (post.usersDisliked.includes(req.body.userId)) {
+          post.usersDisliked.splice(
+            post.usersDisliked.indexOf(req.body.userId),
+            1
+          );
+          post.dislikes--;
+        }
         if (!post.usersLiked.includes(req.body.userId)) {
           post.likes++;
           post.usersLiked.push(req.body.userId);
