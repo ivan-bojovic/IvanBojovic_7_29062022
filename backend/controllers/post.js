@@ -7,8 +7,8 @@ exports.createPost = (req, res, next) => {
   console.log(req.body);
   const postObject = { text: req.body.text };
   const imageVide = req.file === undefined;
-  const textVide = postObject === undefined || postObject === "";
-  console.log(imageVide, textVide, postObject);
+  const textVide = postObject.text === undefined || postObject.text === "";
+  console.log(imageVide, textVide, postObject.text);
   if (imageVide && textVide) {
     return res
       .status(400)
@@ -51,23 +51,24 @@ exports.modifyPost = (req, res, next) => {
             message: "User ID Not Valid",
           });
         }
-        const filename = post.image.split("/images/")[1];
-        fs.unlink(`images/${filename}`, () => {
-          Post.updateOne(
-            { _id: req.params.id },
-            { ...postObject, _id: req.params.id }
+        if (post.image) {
+          const filename = post.image.split("/images/")[1];
+          fs.unlinkSync(`images/${filename}`);
+        }
+        Post.updateOne(
+          { _id: req.params.id },
+          { ...postObject, _id: req.params.id }
+        )
+          .then(() =>
+            res.status(200).json({ message: "Element mise à jour.." })
           )
-            .then(() =>
-              res.status(200).json({ message: "Element mise à jour.." })
-            )
-            .catch((error) => res.status(400).json({ error }));
-        });
+          .catch((error) => res.status(400).json({ error: error.message }));
       })
-      .catch((error) => res.status(500).json({ error }));
+      .catch((error) => res.status(500).json({ error: error.message }));
   } else {
     Post.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
       .then(() => res.status(200).json({ message: "Post modifié." }))
-      .catch((error) => res.status(400).json({ error }));
+      .catch((error) => res.status(400).json({ error: error.message }));
   }
 };
 
