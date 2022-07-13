@@ -4,6 +4,7 @@
       <!-- LE FIL D'ACTUALITÉS DES POSTS -->
       <div class="col-md-6">
         <div
+          v-if="userData"
           v-for="(post, index) in allPosts"
           v-bind:key="post._id"
           class="card"
@@ -11,7 +12,7 @@
           <div class="d-flex justify-content-between p-2 px-3">
             <div class="d-flex flex-row align-items-center">
               <div class="d-flex flex-column ml-2">
-                <small class="text-primary">{{
+                <small class="text">{{
                   post.createdAt.split("T")[0].split("-").reverse().join("/") +
                   " à " +
                   post.createdAt.split("T")[1].split(":").slice(0, -1).join(":")
@@ -42,6 +43,7 @@
 
                   <!--Bouton éditer posts-->
                   <button
+                    @click="postModified.text = post.text"
                     type="submit"
                     role="button"
                     class="btn"
@@ -124,7 +126,7 @@
                 <div class="modal-footer">
                   <button
                     type="button"
-                    class="btn btn-secondary rounded-pill"
+                    class="btn rounded-pill"
                     data-bs-dismiss="modal"
                     aria-label="Annuler changement"
                   >
@@ -137,7 +139,7 @@
                     @click.prevent="editPost(post._id), reload()"
                     type="button"
                     role="button"
-                    class="btn btn-dark align-items-center rounded-pill"
+                    class="btn align-items-center rounded-pill"
                     aria-label="Enregister modification du post"
                   >
                     Enregistrer
@@ -261,5 +263,14 @@ export default {
   gap: 50px;
   align-items: center;
   justify-items: center;
+}
+small.text {
+  color: var(--color-primary);
+}
+button.btn {
+  color: var(--color-primary);
+}
+.input-group-text {
+  background-color: var(--color-secondary);
 }
 </style>

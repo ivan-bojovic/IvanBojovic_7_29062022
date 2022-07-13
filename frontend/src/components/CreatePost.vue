@@ -8,7 +8,7 @@
           id="content"
           rows="5"
           v-model="post.text"
-          class="form-control form-control-sm form-rounded border border-secondary"
+          class="form-control form-control-sm form-rounded border"
           placeholder="Quoi de neuf ?"
         />
       </div>
@@ -101,10 +101,19 @@ export default {
 </script>
 
 <style scoped>
+.input-group > .form-control {
+  background-color: var(--color-secondary);
+}
+
 @media screen and (max-width: 768px) {
   .form-control {
-    width: 100%;
     margin: auto;
+  }
+  .input-group > .form-control {
+    font-size: 0.8rem;
+  }
+  .input-group-text {
+    font-size: 0.8rem;
   }
 }
 </style>

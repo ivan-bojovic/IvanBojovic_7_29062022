@@ -160,7 +160,7 @@ export default {
     checkEmail() {
       console.log("check", this.dataSignup.email);
       if (checkField("Email", this.dataSignup.email) == false)
-        this.emailError = "email groupomania.fr";
+        this.emailError = "seulement email groupomania.fr accepté";
       else this.emailError = "";
     },
     checkPassword() {
@@ -182,7 +182,7 @@ export default {
         .then((response) => {
           console.log(response);
           alert("Inscription validée, connectez vous !");
-          this.$router.push("/");
+          this.$emit("signUpDone");
         })
         .catch((error) => {
           console.log(error);
@@ -208,5 +208,9 @@ export default {
 .help {
   font-size: 10px;
   margin: 0px;
+}
+.form-label {
+  background-color: var(--color-secondary);
+  color: var(--color-tertiary);
 }
 </style>

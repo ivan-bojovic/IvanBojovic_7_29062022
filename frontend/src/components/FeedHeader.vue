@@ -1,16 +1,8 @@
 <template>
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-      <div class="navbar-brand">
-        <img
-          src="../assets/icon-left-font.png"
-          alt="logo"
-          width="50"
-          height="50"
-          class="d-inline-block align-text-top"
-        />
-      </div>
-      <span
+      <div class="navbar-brand"></div>
+      <span v-if="userData"
         ><strong>Bonjour</strong> {{ userData.data.firstName }}
         {{ userData.data.lastName }}
       </span>
@@ -45,7 +37,7 @@ export default {
 
   methods: {
     logout() {
-      localStorage.clear();
+      this.$store.commit("setUserData", undefined);
       this.$router.push("/");
     },
   },
@@ -56,8 +48,14 @@ export default {
 a {
   color: var(--color-tertiary);
 }
+.container-fluid {
+  background-color: var(--color-secondary);
+}
 .navbar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+}
+.nav {
+  margin-bottom: 1rem;
 }
 </style>

@@ -29,7 +29,7 @@
       @click="login()"
       type="button"
       class="btn btn-secondary btn-block mb-3"
-      :disable="checkDataLogin()"
+      :disabled="checkDataLogin()"
     >
       Connexion
     </button>
@@ -82,5 +82,9 @@ export default {
 <style scoped>
 .btn-secondary {
   background-color: var(--color-tertiary);
+}
+.form-label {
+  background-color: var(--color-secondary);
+  color: var(--color-tertiary);
 }
 </style>

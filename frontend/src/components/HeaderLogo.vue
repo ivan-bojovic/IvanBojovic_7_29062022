@@ -17,7 +17,10 @@ export default {
 
 <style scoped>
 .col img {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
+}
+.container-sm {
+  background-color: var(--color-tertiary);
 }
 </style>

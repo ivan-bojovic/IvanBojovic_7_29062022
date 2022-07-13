@@ -99,9 +99,14 @@ export default {
   gap: 50px;
   align-items: center;
   justify-items: center;
+  background-color: var(--color-secondary);
+  padding-left: 5px;
 }
 .liked,
 .disliked {
   color: var(--color-primary);
+}
+.thumbs span {
+  color: var(--color-tertiary);
 }
 </style>
