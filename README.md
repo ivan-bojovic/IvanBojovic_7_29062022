@@ -34,9 +34,9 @@ Dans backend, creér un fichier .env et ajouter et personnaliser vos information
 • USER_DB= votre nom d'utilisateur de la base de données,  
 • PASSWORD_DB= votre mot de passe de la base de données
 
-Pour importer le fichier avce des collections JSON posts et users
+Pour importer le fichier avec des collections JSON posts et users
 
 -sur ligne de commande:  
 mongoimport (necessite installation de MongoDB Database Tools)  
 ou  
-sur MOngoDB Compas- creéer un nouveau Database et importer les collections users et posts en cliquant sur ADD DATA- Import file
+sur MongoDB Compas- creéer un nouveau Database et importer les collections users et posts en cliquant sur ADD DATA- Import file
