@@ -146,31 +146,26 @@ export default {
   },
   methods: {
     checkLastName() {
-      console.log("check", this.dataSignup.lastName);
       if (checkField("Alpha", this.dataSignup.lastName) == false)
-        this.lastNameError = "le nom ne pas bien écrit";
+        this.lastNameError = "le nom n'est pas bien écrit";
       else this.lastNameError = "";
     },
     checkFirstName() {
-      console.log("check", this.dataSignup.firstName);
       if (checkField("Alpha", this.dataSignup.firstName) == false)
-        this.firstNameError = "le prénom ne pas bien écrit";
+        this.firstNameError = "le prénom n'est pas bien écrit";
       else this.firstNameError = "";
     },
     checkEmail() {
-      console.log("check", this.dataSignup.email);
       if (checkField("Email", this.dataSignup.email) == false)
         this.emailError = "seulement email groupomania.fr accepté";
       else this.emailError = "";
     },
     checkPassword() {
-      console.log("check", this.dataSignup.password);
       if (checkField("Password", this.dataSignup.password) == false)
         this.passwordError = "password invalid";
       else this.passwordError = "";
     },
     checkPasswordConfirmation() {
-      console.log("check", this.dataSignup.passwordConfirmation);
       if (this.dataSignup.password !== this.dataSignup.passwordConfirmation)
         this.passwordConfirmationError =
           "Veuillez confirmer votre mot de passe";
@@ -183,6 +178,13 @@ export default {
           console.log(response);
           alert("Inscription validée, connectez vous !");
           this.$emit("signUpDone");
+          this.dataSignup.lastName = "";
+          this.dataSignup.firstName = "";
+          this.dataSignup.email = "";
+          this.dataSignup.password = "";
+          this.dataSignup.passwordConfirmation = "";
+          const errorMsg = document.getElementById("signupError");
+          errorMsg.textContent = "";
         })
         .catch((error) => {
           console.log(error);

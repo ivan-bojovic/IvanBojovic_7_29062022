@@ -9,7 +9,6 @@ const store = createStore({
   },
   mutations: {
     setUserData(state, data) {
-      console.log("setUserData", data);
       state.userData = data;
       localStorage.setItem("user", JSON.stringify(data));
     },
@@ -19,7 +18,6 @@ const store = createStore({
           state.userData = JSON.parse(localStorage.getItem("user"));
         } catch (e) {
           localStorage.removeItem("user");
-          console.log("Données corrompues");
         }
       }
     },

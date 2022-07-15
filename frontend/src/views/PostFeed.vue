@@ -31,7 +31,6 @@ export default {
     }),
   },
   mounted() {
-    console.log(this.userData);
     if (!this.userData) this.$router.push("/");
   },
 

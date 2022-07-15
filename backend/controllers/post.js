@@ -8,7 +8,6 @@ exports.createPost = (req, res, next) => {
   const postObject = { text: req.body.text };
   const imageVide = req.file === undefined;
   const textVide = postObject.text === undefined || postObject.text === "";
-  console.log(imageVide, textVide, postObject.text);
   if (imageVide && textVide) {
     return res
       .status(400)
@@ -75,7 +74,6 @@ exports.modifyPost = (req, res, next) => {
 // Suppression des posts.
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }).then((post) => {
-    console.log(req.userId, post.userId, req.userId === post.userId);
     if (post.userId !== req.userId && req.userRole !== "admin") {
       return res.status(400).json({
         message: "User ID Not Valid",

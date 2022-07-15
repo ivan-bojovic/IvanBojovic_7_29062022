@@ -203,7 +203,6 @@ export default {
       setTimeout("window.open(self.location, '_self');", 1000);
     },
     editPost(postId) {
-      console.log(postId);
       let formData = new FormData();
       if (this.postModified.text) {
         formData.append("text", this.postModified.text);
@@ -243,14 +242,12 @@ export default {
       }
     },
     onFileSelected(event) {
-      console.log(event);
       this.postModified.image =
         event.target.files[0] || event.dataTransfer.files;
       console.log(this.postModified.image);
     },
     // envoi du like au back-end et maj infos
   },
-  components: { LikeDislike },
 };
 </script>
 

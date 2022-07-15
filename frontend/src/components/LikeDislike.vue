@@ -50,7 +50,6 @@ export default {
   methods: {
     // envoi du like au back-end
     likePost() {
-      console.log(this.userData.data);
       axios
         .post(
           `http://localhost:3000/api/posts/${this.post._id}/like`,
@@ -70,7 +69,6 @@ export default {
         .catch((error) => console.log(error));
     },
     dislikePost() {
-      console.log(this.userData.data);
       axios
         .post(
           `http://localhost:3000/api/posts/${this.post._id}/like`,

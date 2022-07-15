@@ -63,11 +63,9 @@ export default {
 
   methods: {
     onFileSelected(event) {
-      console.log(event);
       this.post.image = event.target.files[0] || event.dataTransfer.files;
     },
     createPost() {
-      console.log(this.post);
       const fd = new FormData();
       fd.append("text", this.post.text);
       fd.append("image", this.post.image);

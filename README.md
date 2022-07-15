@@ -9,32 +9,34 @@ Prerequis
 Installation :
 Clonez ce projet depuis GitHub
 
-Front-End
+Front-End:
 
-À la racine du dossier frontend
-npm install
-npm run serve
+À la racine du dossier frontend:  
+npm install;  
+npm run serve;
 
 Ouvrir le navigateur à l'adresse `http://localhost:8080/`
 
-Back-End
+Back-End:
 
-À la racine du dossier backend
-npm install
-node ou nodemon server
+À la racine du dossier backend:  
+npm install;  
+node ou nodemon server;
 
 Accès serveur backend `http://localhost:3000/`
 
-Base de données
+Base de données:
+
 Connexion à MongoDB
-Dans backend, creér un fichier .env et ajouter et personnaliser vos informations ajouter après "=" :
-• JWTTOKEN= mots de passe composé de chiffres, alphabet majuscule/minuscule,
-• USER_DB= votre nom d'utilisateur de la base de données,
+
+Dans backend, creér un fichier .env et ajouter et personnaliser vos informations ajouter après "=" :  
+• JWTTOKEN= mots de passe composé de chiffres, alphabet majuscule/minuscule,  
+• USER_DB= votre nom d'utilisateur de la base de données,  
 • PASSWORD_DB= votre mot de passe de la base de données
 
 Pour importer le fichier avce des collections JSON posts et users
 
--sur ligne de commande:
-mongorestore ou mongoimport (necessite installation de MongoDB Database Tools)
-ou
+-sur ligne de commande:  
+mongoimport (necessite installation de MongoDB Database Tools)  
+ou  
 sur MOngoDB Compas- creéer un nouveau Database et importer les collections users et posts en cliquant sur ADD DATA- Import file

@@ -84,7 +84,6 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  console.log("login");
   const errorMessage =
     "Impossible de se connecter!Verifier votre email ou mot de passe!";
   User.findOne({ email: req.body.email })
